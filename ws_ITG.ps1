@@ -5,6 +5,8 @@ $type = Get-ITGlueFlexibleAssetTypes -filter_name $selectedtype
 $assets = Get-ITGlueFlexibleAssets -filter_flexible_asset_type_id $type.data.id -filter_organization_id $org.data.id
 $chosenassets = $assets.data.attributes.name | Sort-Object | Out-GridView -Title "Select $selectedtype items to Edit" -Passthru
 foreach($chosenasset in $chosenassets){
+    Clear-Variable data -ErrorAction SilentlyContinue
+    Clear-Variable asset -ErrorAction SilentlyContinue
     $asset = Get-ITGlueFlexibleAssets -filter_flexible_asset_type_id $type.data.id -filter_organization_id $org.data.id -filter_name $chosenasset
     $data = @{
         type = $asset.data.type
